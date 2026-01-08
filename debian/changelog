@@ -1,0 +1,20 @@
+blocky (0.28.2-3) unstable; urgency=medium
+
+  * Add CAP_NET_BIND_SERVICE capability to systemd service for privileged ports
+  * Fix postinst: handle compressed config.yml.gz from dh_compress
+
+ -- crims0n <crims0n@minios.dev>  Tue, 06 Jan 2026 18:49:02 +0300
+
+blocky (0.28.2-2) unstable; urgency=medium
+
+  * Fix config file handling to prevent overwriting existing configs
+  * Move default config to /usr/share/doc/blocky/config.yml.example
+  * Create config in postinst only if it doesn't exist
+
+ -- crims0n <crims0n@minios.dev>  Thu, 19 Dec 2025 22:40:00 +0300
+
+blocky (0.28.2-1) unstable; urgency=medium
+
+  * Initial release.
+
+ -- crims0n <crims0n@minios.dev>  Fri, 19 Dec 2025 20:39:22 +0300

@@ -1,0 +1,55 @@
+.TH BLOCKY 1 "December 2025" "0.28.2" "User Commands"
+.SH NAME
+blocky \- A fast and configurable DNS Proxy and ad-blocker for local network
+.SH SYNOPSIS
+.B blocky
+[options]
+.SH DESCRIPTION
+Blocky is a DNS proxy and ad-blocker for local networks written in Go. It features:
+.IP \[bu] 2
+Blocking of ads and trackers using external lists (compatible with Pi-hole lists)
+.IP \[bu]
+Caching of DNS queries
+.IP \[bu]
+DoH (DNS over HTTPS) and DoT (DNS over TLS) support
+.IP \[bu]
+Customizable blocking per client
+.IP \[bu]
+Prometheus metrics
+.SH OPTIONS
+.TP
+\fB\-c\fR, \fB\-\-config\fR \fIfile\fR
+Path to config file or folder (default "./config.yml")
+.TP
+\fB\-\-apiHost\fR \fIhost\fR
+Host of blocky (API). Default overridden by config and CLI. (default "localhost")
+.TP
+\fB\-\-apiPort\fR \fIport\fR
+Port of blocky (API). Default overridden by config and CLI. (default 4000)
+.TP
+\fB\-h\fR, \fB\-\-help\fR
+Help for blocky
+.SH COMMANDS
+.TP
+\fBblocking\fR
+Control status of blocking resolver
+.TP
+\fBcache\fR
+Performs cache operations
+.TP
+\fBlists\fR
+Lists operations
+.TP
+\fBquery\fR
+Performs DNS query
+.TP
+\fBserve\fR
+Start blocky DNS server (default command)
+.TP
+\fBvalidate\fR
+Validates the configuration
+.TP
+\fBversion\fR
+Print the version number of blocky
+.SH SEE ALSO
+Full documentation is available at https://github.com/0xERR0R/blocky

@@ -1,0 +1,64 @@
+name: Build Package
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Install Build Dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y build-essential debhelper devscripts golang-go
+
+    - name: Get version from changelog
+      id: get_version
+      run: |
+        VERSION=$(dpkg-parsechangelog -S Version | sed -e 's/-[^-]*$//')
+        echo "VERSION=${VERSION}" >> $GITHUB_OUTPUT
+        echo "Detected version: ${VERSION}"
+
+    - name: Checkout Upstream
+      uses: actions/checkout@v4
+      with:
+        repository: 0xERR0R/blocky
+        ref: v${{ steps.get_version.outputs.VERSION }}
+        path: blocky-src
+
+    - name: Prepare Build Directory
+      run: |
+        cp -r debian blocky-src/
+
+    - name: Setup Go
+      uses: actions/setup-go@v5
+      with:
+        go-version: '1.25'
+        check-latest: true
+
+    - name: Build Package
+      run: |
+        cd blocky-src
+        dpkg-buildpackage -us -uc -b
+
+    - name: Upload Artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: blocky-debs
+        path: |
+          *.deb
+
+    - name: Create Release
+      if: startsWith(github.ref, 'refs/tags/')
+      uses: softprops/action-gh-release@v2
+      with:
+        files: |
+          *.deb

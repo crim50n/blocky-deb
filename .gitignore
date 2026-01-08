@@ -1,0 +1,19 @@
+# Debian packaging artifacts
+.pc/
+*.substvars
+*.debhelper
+*.log
+files
+*.deb
+*.changes
+*.dsc
+*.build*
+*.tar.*
+obj-*/
+.cache/
+blocky
+
+# Package directories (generated during build)
+debian/blocky/
+debian/debhelper-build-stamp
+debian/tmp/

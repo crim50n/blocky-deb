@@ -1,0 +1,37 @@
+#!/usr/bin/make -f
+
+export DH_VERBOSE = 1
+export CGO_ENABLED=0
+export GO111MODULE=on
+export GOPROXY=https://proxy.golang.org,direct
+export GOTOOLCHAIN=go1.25.5
+
+VERSION := v$(shell dpkg-parsechangelog -S Version | sed -e 's/-[^-]*$$//')
+BUILD_TIME := $(shell date -u -d "@$(SOURCE_DATE_EPOCH)" "+%Y%m%d-%H%M" 2>/dev/null || date -u "+%Y%m%d-%H%M")
+
+%:
+	dh $@
+
+override_dh_auto_clean:
+	mkdir -p $(CURDIR)/.cache
+	export HOME=$(CURDIR)/.cache && dh_auto_clean
+	[ ! -d $(CURDIR)/.cache ] || chmod -R u+w $(CURDIR)/.cache
+	rm -rf $(CURDIR)/.cache
+	[ ! -d obj-x86_64-linux-gnu ] || chmod -R u+w obj-x86_64-linux-gnu
+	rm -rf obj-x86_64-linux-gnu blocky
+
+
+override_dh_auto_build:
+	mkdir -p $(CURDIR)/.cache
+	export HOME=$(CURDIR)/.cache && \
+	go build -v -ldflags="-w -s -X github.com/0xERR0R/blocky/util.Version=$(VERSION) -X github.com/0xERR0R/blocky/util.BuildTime=$(BUILD_TIME)" -o blocky
+
+override_dh_auto_test:
+	# Skip tests
+	true
+
+override_dh_auto_install:
+	mkdir -p debian/blocky/usr/bin
+	cp blocky debian/blocky/usr/bin/
+
+

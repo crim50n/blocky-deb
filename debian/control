@@ -1,0 +1,19 @@
+Source: blocky
+Section: net
+Priority: optional
+Maintainer: crims0n <crims0n@minios.dev>
+Build-Depends: debhelper-compat (= 13), golang-go
+Standards-Version: 4.6.2
+Homepage: https://github.com/0xERR0R/blocky
+
+Package: blocky
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ca-certificates, adduser
+Description: Fast and lightweight DNS proxy as ad-blocker for local network
+ Blocky is a DNS proxy and ad-blocker for the local network written in Go.
+ It features:
+  - Blocking of ads and trackers using domain lists
+  - DNS over HTTPS (DoH) support
+  - Custom DNS resolution for local domains
+  - Caching
+  - Query logging
