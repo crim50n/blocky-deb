@@ -13,14 +13,16 @@ case "$1" in
 
         # Create default config if not exists
         if [ ! -f /etc/blocky/config.yml ]; then
-            if [ -f /usr/share/doc/blocky/config.yml.gz ]; then
-                zcat /usr/share/doc/blocky/config.yml.gz > /etc/blocky/config.yml
-            elif [ -f /usr/share/doc/blocky/config.yml ]; then
-                cp /usr/share/doc/blocky/config.yml /etc/blocky/config.yml
+            if [ -f /usr/share/blocky/config.yml.gz ]; then
+                zcat /usr/share/blocky/config.yml.gz > /etc/blocky/config.yml
+            elif [ -f /usr/share/blocky/config.yml ]; then
+                cp /usr/share/blocky/config.yml /etc/blocky/config.yml
             fi
-            chown blocky:blocky /etc/blocky/config.yml
-            chmod 644 /etc/blocky/config.yml
-            echo "Created default Blocky configuration at /etc/blocky/config.yml"
+            if [ -f /etc/blocky/config.yml ]; then
+                chown blocky:blocky /etc/blocky/config.yml
+                chmod 644 /etc/blocky/config.yml
+                echo "Created default Blocky configuration at /etc/blocky/config.yml"
+            fi
         fi
     ;;
 

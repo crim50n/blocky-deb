@@ -1,3 +1,10 @@
+blocky (0.28.2-4) unstable; urgency=medium
+
+  * Fix config file installation: move to /usr/share/blocky/ to avoid exclusion by dpkg path-exclude
+  * Fix postinst to correctly handle config file copying
+
+ -- crims0n <crims0n@minios.dev>  Sat, 10 Jan 2026 22:35:49 +0300
+
 blocky (0.28.2-3) unstable; urgency=medium
 
   * Add CAP_NET_BIND_SERVICE capability to systemd service for privileged ports
